@@ -20,7 +20,7 @@
   max-width: 140rem;
   text-align: center;
 
-  @include media('<phone') {
+  @include media("<phone") {
     max-width: 67.7rem;
   }
 }
@@ -36,7 +36,6 @@
 }
 
 .about__footer__copyright {
-
 }
 
 .about__footer__credits {

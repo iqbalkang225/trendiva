@@ -6,6 +6,8 @@ const app = express();
 const path = require("path");
 const port = 3000;
 
+app.use(express.static(path.join(__dirname, "public")));
+
 const Prismic = require("@prismicio/client");
 const PrismicDOM = require("prismic-dom");
 
@@ -125,15 +127,10 @@ app.set("view engine", "pug");
 
 app.get("/about", async (req, res) => {
   const api = await initApi(req);
-
   const about = await api.getSingle("about");
 
   const { body } = about.data;
   console.log(body);
-
-  if (body.slice_type === "gallery ") {
-    console.log("ss");
-  }
 
   res.render("pages/about", { body });
 });
