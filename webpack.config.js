@@ -15,11 +15,16 @@ const dirStyles = path.join(__dirname, "styles");
 const dirNode = "node_modules";
 
 module.exports = {
-  entry: [path.join(dirApp, "index.js"), path.join(dirStyles, "index.scss")],
+  entry: [path.join(dirApp, "index.js")],
 
   resolve: {
     modules: [dirApp, dirShared, dirStyles, dirNode],
   },
+
+  // devServer: {
+  //   writeToDisk: true,
+  //   watchFiles: ["views/**/*"],
+  // },
 
   plugins: [
     new webpack.DefinePlugin({
@@ -63,34 +68,14 @@ module.exports = {
       },
 
       {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: "",
-            },
-          },
-          {
-            loader: "css-loader",
-          },
-          {
-            loader: "postcss-loader",
-          },
-          {
-            loader: "sass-loader",
-          },
-        ],
+        test: /\.css$/,
+        include: path.resolve(__dirname, "styles"),
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
 
       {
         test: /\.(jpe?g|png|gif|svg|woff2?|fnt|webp)$/,
-        loader: "file-loader",
-        options: {
-          name(file) {
-            return "[hash].[ext]";
-          },
-        },
+        type: "asset/resource",
       },
 
       {

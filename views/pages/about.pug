@@ -19,7 +19,7 @@ block content
         if section.slice_type == 'content'
           section#content 
             #content__wrapper 
-              p#content__label=section.primary.title
+              p.bg-red-200#content__label=section.primary.title
               p#content__description=section.primary.text
               figure
                 img(src=section.primary.image.url, alt="")

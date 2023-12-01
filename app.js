@@ -47,91 +47,40 @@ app.use((req, res, next) => {
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-// const handleRequest = async (api) => {
-//   const about = await api.getSingle("about");
-//   const home = await api.getSingle("home");
-//   const meta = await api.getSingle("meta");
-//   const navigation = await api.getSingle("navigation");
-//   const preloader = await api.getSingle("preloader");
+app.get("/", async (req, res) => {
+  const api = await initApi(req);
+  // const home = await api.getSingle("home");
+  const preloader = await api.getSingle("preloader");
+  console.log(preloader);
 
-//   const { results: collectionsData } = await api.query(
-//     Prismic.Predicates.at("document.type", "collection"),
-//     {
-//       fetchLinks: "product.image, product.model",
-//     }
-//   );
+  const { data } = preloader;
+  res.render("pages/home", { data });
+});
 
-//   const { results: productsData } = await api.query(
-//     Prismic.Predicates.at("document.type", "product"),
-//     {
-//       fetchLinks: "collection.title",
-//       pageSize: 100,
-//     }
-//   );
+app.get("/collections", async (req, res) => {
+  const api = await initApi(req);
+  const collection = await api.getSingle("collection");
+  console.log(collection);
 
-//   const {
-//     data: { list: collectionsOrder },
-//   } = await api.getSingle("collections");
+  const { data } = collection;
+  res.render("pages/collections", { data });
+});
 
-//   const collections = collectionsOrder.map(({ collection }) => {
-//     const { uid } = collection;
-//     const data = find(collectionsData, { uid });
+app.get("/details/:uid", async (req, res) => {
+  const api = await initApi(req);
+  const product = await api.getByUID("product", req.params.uid);
+  console.log(product);
+  console.log(product.data.title);
 
-//     return data;
-//   });
-
-//   const products = [];
-
-//   collections.forEach((collection) => {
-//     collection.data.products.forEach(({ products_product: { uid } }) => {
-//       products.push(find(productsData, { uid }));
-//     });
-//   });
-
-//   const assets = [];
-
-//   home.data.gallery.forEach((item) => {
-//     assets.push(item.image.url);
-//   });
-
-//   about.data.gallery.forEach((item) => {
-//     assets.push(item.image.url);
-//   });
-
-//   about.data.body.forEach((section) => {
-//     if (section.slice_type === "gallery") {
-//       section.items.forEach((item) => {
-//         assets.push(item.image.url);
-//       });
-//     }
-//   });
-
-//   collections.forEach((collection) => {
-//     collection.data.products.forEach((item) => {
-//       assets.push(item.products_product.data.image.url);
-//       assets.push(item.products_product.data.model.url);
-//     });
-//   });
-
-//   return {
-//     about,
-//     assets,
-//     collections,
-//     home,
-//     meta,
-//     navigation,
-//     preloader,
-//     products,
-//   };
-// };
+  const { data } = product;
+  res.render("pages/details", { data });
+});
 
 app.get("/about", async (req, res) => {
   const api = await initApi(req);
   const about = await api.getSingle("about");
 
   const { body } = about.data;
-  console.log(body);
-
   res.render("pages/about", { body });
 });
 

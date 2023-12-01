@@ -1,0 +1,55 @@
+extends ../base.pug
+
+
+
+block variables
+  - var template = 'details'
+
+  -detailsContainer = 'bg-red-400 h-screen w-screen'
+  -detailsWrapper = 'h-full w-full flex items-center justify-center'
+
+  -imageContainer = 'w-[44rem] h-[58rem]'
+  -image = 'h-full w-full'
+
+  -contentContainer = 'ms-[7rem]'
+  -contentLabel = 'label mb-[2.5rem]'
+  -contentHeading = 'product-heading'
+
+  -infoContainer = 'max-w-2xl ms-[13.5rem] mt-[4.5rem] space-y-[3rem]'
+  -infoArticle = 'grid grid-cols-[7rem,1fr]'
+  -infoIcon = 'w-[3.5rem] h-[3.5rem] border-white border rounded-full'
+  -infoLabel = 'label'
+  -infoItem = 'first-letter:capitalize'
+  -infoLink = 'font-heading text-[2.3rem] mt-[3rem] inline-block capitalize'
+
+//- -detailsContainer = []
+
+
+block content 
+  #details(class=detailsContainer)
+    #details-wrapper(class=detailsWrapper)
+
+      figure#image(class=imageContainer)
+        img(src=data.image.url class=image)
+
+      #content(class=contentContainer)
+        p(class=contentLabel) radiance collection
+        h2(class=contentHeading)=data.title
+
+        #info(class=infoContainer)
+          each highlight in data.highlights 
+            article(class=infoArticle).items-center
+              #info-icon(class=infoIcon)
+              p(class=infoItem)=highlight.text
+
+          
+          each information in data.information 
+            article(class=infoArticle)
+              p(class=infoLabel)=information.label
+              p(class=infoItem)=information.text
+
+          a(href=data.link_url.url class=infoLink)=data.link_text 
+
+          
+
+      

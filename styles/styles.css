@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "george-x";
+    src: url("/fonts/george-x-regular.woff2") format("woff2"),
+      url("../fonts/george-x-regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "suisse-bp";
+    src: url("../fonts/suisse-bp-regular.woff2") format("woff2"),
+      url("../fonts/suisse-bp-regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "suisse-bp";
+    src: url("../fonts/suisse-bp-light.woff2") format("woff2"),
+      url("../fonts/suisse-bp-light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "suisse-bp";
+    src: url("../fonts/suisse-bp-ultra-light.woff2") format("woff2"),
+      url("../fonts/suisse-bp-ultra-light.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+@layer components {
+  .product-heading {
+    @apply font-heading text-9xl capitalize max-w-lg;
+  }
+
+  .label {
+    @apply text-[0.9rem] uppercase;
+  }
+}
+
+html {
+  font-size: 62.5%;
+  /* font-size: calc(100vw / 1920 * 10); */
+}
+
+@media screen and (max-width: 800px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
