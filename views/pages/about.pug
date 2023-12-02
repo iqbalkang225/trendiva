@@ -4,14 +4,14 @@ block variables
   - var template = 'about'
 
 block content 
-  #about
-    #about__wrapper
+  .about
+    .about__wrapper
 
       each section in body
 
         if section.slice_type == 'gallery'
-          section#gallery
-            #gallery__wrapper
+          section.gallery
+            .gallery__wrapper
               each media in section.items
                 figure
                   img(src=media.image.url, alt="")
@@ -20,19 +20,19 @@ block content
           h2=section.primary.text
 
         if section.slice_type == 'content'
-          section#content 
-            #content__wrapper 
-              p.bg-red-200#content__label=section.primary.title
-              p#content__description=section.primary.text
+          section.about__content 
+            .content__wrapper 
+              p.bg-red-200.content__label=section.primary.title
+              p.content__description=section.primary.text
               figure
                 img(src=section.primary.image.url, alt="")
 
         if section.slice_type == 'highlight'
-          section#highlight
-            #highlight__wrapper
+          section.highlight
+            .highlight__wrapper
               if section.primary.label
-                p#highlight__label=section.primary.label
-              h3#highlight__title=section.primary.title
+                p.highlight__label=section.primary.label
+              h3.highlight__title=section.primary.title
               each media in section.items
                 figure
                   img(src=media.image.url, alt="")

@@ -2,6 +2,16 @@ import Page from "classes/Page";
 
 export default class About extends Page {
   constructor() {
-    super({ id: "about" });
+    super({
+      id: "about",
+      element: ".about",
+      elements: {
+        highlightWrapper: " .highlight__wrapper",
+        highlight: " .highlight",
+        content: ".about__content",
+      },
+    });
+
+    console.log("run");
   }
 }
