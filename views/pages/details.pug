@@ -33,7 +33,7 @@ block content
         img(src=data.image.url class=image)
 
       #content(class=contentContainer)
-        p(class=contentLabel) radiance collection
+        p(class=contentLabel)=data.type.data.title
         h2(class=contentHeading)=data.title
 
         #info(class=infoContainer)

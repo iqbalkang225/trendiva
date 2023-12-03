@@ -59,8 +59,18 @@ app.get("/", async (req, res) => {
 
 app.get("/collections", async (req, res) => {
   const api = await initApi(req);
-  const collection = await api.getSingle("collection");
-  console.log(collection);
+  const { results: collection } = await api.query(
+    Prismic.Predicates.at("document.type", "collection"),
+    {
+      fetchLinks: "product.image, product.model",
+    }
+  );
+
+  // console.log(collection);
+
+  collection.forEach((coll) => {
+    console.log(coll.data.products);
+  });
 
   const { data } = collection;
   res.render("pages/collections", { data });
@@ -68,11 +78,12 @@ app.get("/collections", async (req, res) => {
 
 app.get("/details/:uid", async (req, res) => {
   const api = await initApi(req);
-  const product = await api.getByUID("product", req.params.uid);
-  console.log(product);
-  console.log(product.data.title);
+  const product = await api.getByUID("product", req.params.uid, {
+    fetchLinks: "collection.title",
+  });
 
   const { data } = product;
+
   res.render("pages/details", { data });
 });
 
