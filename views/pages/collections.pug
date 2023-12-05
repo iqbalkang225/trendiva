@@ -1,8 +1,51 @@
 extends ../base.pug
 
 block variables
-  - var template = 'collections'
+  - const template = 'collections'
+
+  - const collectionsContainer = 'relative h-screen bg-red-400 overflow-hidden'
+
+  - const collectionTitles = 'absolute-center -rotate-90 z-10'
+  - const collectionTitlesWrapper = 'flex gap-4'
+
+  - const title = 'flex items-center gap-4'
+  - const labelText = 'label rotate-90 text-center'
+  - const titleText = 'title-heading'
+
+  - const collectionsGallery = 'absolute top-1/2 -translate-y-1/2'
+  - const collectionGalleryWrapper = 'flex gap-x-16'
+
+  - const imageWrapper = 'w-[30rem] h-[40rem]'
+  - const image = 'image'
+
+  - const collectionInfoContainer = 'absolute bottom-16 left-16 max-w-xl'
+  - const collectionInfoTitle = 'collection-heading'
+
+
+
+  
 
 block content
-  .collections 
-    h1.text-6xl.font-bold collections
+  #collections(class=collectionsContainer)
+    #collection__wrapper 
+
+      #collections__titles(class=collectionTitles)
+        #collections__titles__wrapper(class=collectionTitlesWrapper)
+          each collection, index in collections
+            .collections__titles__item(class=title)         
+              p(class=labelText)!=`${home.data.label}<br>${Numbers(index)}`          
+              p(class=titleText)=collection.data.title
+
+      #collections__gallery(class=collectionsGallery)
+        #collection__gallery__wrapper(class=collectionGalleryWrapper)
+          each collection in collections
+            each item in collection.data.products 
+              a(href="#") 
+                figure(class=imageWrapper)
+                  img(src=item.product.data.image.url class=image)
+
+      #collection__content
+        each collection,index in collections 
+          article(class=`${index !== 0 ? 'hidden' : '' } ${collectionInfoContainer} `)
+            h2(class=collectionInfoTitle)=`${collection.data.title} collection`
+            p=collection.data.description

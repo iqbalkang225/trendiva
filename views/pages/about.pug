@@ -1,23 +1,43 @@
 extends ../base.pug
 
 block variables
-  - var template = 'about'
+  - const template = 'about'
+
+  - const about = 'overflow-hidden'
+  - const aboutWrapper = '[&>*]:py-32'
+
+  - const gallery = 'h-[50rem] relative'
+  - const galleryWrapper = 'flex absolute top-1/2 -translate-y-1/2'
+  - const galleryImageWrapper = 'w-[30rem] h-[40rem]'
+  - const galleryImage = 'image'
+
+  - const aboutTitle = 'about-heading '
+
+  - const highlight = 'w-[100rem] relative h-[70rem] mx-auto'
+  - const highlightWrapper = ''
+  - const highlightImageWrapper = 'w-[35rem] h-[50rem] absolute first-of-type:top-0 last-of-type:bottom-0 last-of-type:right-0'
+  - const highlightImage = 'image'
+
+  - const highlightText = ' flex items-center absolute-center -rotate-90'
+  - const highlightLabel = 'label rotate-90 text-center w-32'
+  - const highlightHeading = 'title-heading'
+
 
 block content 
-  .about
-    .about__wrapper
+  #about(class=about)
+    #about__wrapper(class=aboutWrapper)
 
       each section in body
 
         if section.slice_type == 'gallery'
-          section.gallery
-            .gallery__wrapper
+          section#gallery(class=gallery)
+            #gallery__wrapper(class=galleryWrapper)
               each media in section.items
-                figure
-                  img(src=media.image.url, alt="")
+                figure(class=galleryImageWrapper)
+                  img(src=media.image.url, class=galleryImage)
 
         if section.slice_type == 'heading'
-          h2=section.primary.text
+          h2(class=aboutTitle)!=section.primary.text.replace(/\n/g, '<br>')
 
         if section.slice_type == 'content'
           section.about__content 
@@ -25,15 +45,16 @@ block content
               p.bg-red-200.content__label=section.primary.title
               p.content__description=section.primary.text
               figure
-                img(src=section.primary.image.url, alt="")
+                img(src=section.primary.image.url)
 
         if section.slice_type == 'highlight'
-          section.highlight
-            .highlight__wrapper
-              if section.primary.label
-                p.highlight__label=section.primary.label
-              h3.highlight__title=section.primary.title
+          section.highlight(class=highlight)
+            #highlight__wrapper(class=highlightWrapper)
+              #highlight__text(class=highlightText)
+                h3(class=highlightHeading)=section.primary.title
+                if section.primary.label
+                  p(class=highlightLabel)=section.primary.label
               each media in section.items
-                figure
-                  img(src=media.image.url, alt="")
+                figure(class=highlightImageWrapper)
+                  img(src=media.image.url,  class=highlightImage)
               

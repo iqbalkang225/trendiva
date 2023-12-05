@@ -41,12 +41,32 @@
 }
 
 @layer components {
+  .title-heading {
+    @apply font-heading text-[14rem] capitalize;
+  }
+
+  .about-heading {
+    @apply font-heading text-[7.5rem] leading-[1] text-center;
+  }
+
   .product-heading {
     @apply font-heading text-9xl capitalize max-w-lg;
   }
 
+  .collection-heading {
+    @apply font-heading text-6xl capitalize max-w-lg;
+  }
+
   .label {
     @apply text-[0.9rem] uppercase;
+  }
+
+  .image {
+    @apply h-full w-full object-cover;
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
 }
 

@@ -39,6 +39,19 @@ app.use((req, res, next) => {
     endpoint: process.env.PRISMIC_ENDPOINT,
     linkResolver: handleLinkResolver,
   };
+
+  res.locals.Numbers = (index) => {
+    return index == 0
+      ? "One"
+      : index == 1
+      ? "Two"
+      : index == 2
+      ? "Three"
+      : index == 3
+      ? "Four"
+      : "";
+  };
+
   res.locals.PrismicDOM = PrismicDOM;
 
   next();
@@ -59,21 +72,19 @@ app.get("/", async (req, res) => {
 
 app.get("/collections", async (req, res) => {
   const api = await initApi(req);
-  const { results: collection } = await api.query(
+  const preloader = await api.getSingle("preloader");
+  const home = await api.getSingle("home");
+
+  const { results: collections } = await api.query(
     Prismic.Predicates.at("document.type", "collection"),
     {
       fetchLinks: "product.image, product.model",
     }
   );
 
-  // console.log(collection);
+  console.log(home);
 
-  collection.forEach((coll) => {
-    console.log(coll.data.products);
-  });
-
-  const { data } = collection;
-  res.render("pages/collections", { data });
+  res.render("pages/collections", { collections, home, preloader });
 });
 
 app.get("/details/:uid", async (req, res) => {
