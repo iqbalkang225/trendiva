@@ -62,12 +62,17 @@ app.set("view engine", "pug");
 
 app.get("/", async (req, res) => {
   const api = await initApi(req);
-  // const home = await api.getSingle("home");
+  const home = await api.getSingle("home");
+  const { results: collections } = await api.query(
+    Prismic.Predicates.at("document.type", "collection"),
+    {
+      fetchLinks: "product.image, product.model",
+    }
+  );
   const preloader = await api.getSingle("preloader");
-  console.log(preloader);
+  console.log(collections);
 
-  const { data } = preloader;
-  res.render("pages/home", { data });
+  res.render("pages/home", { collections, home });
 });
 
 app.get("/collections", async (req, res) => {

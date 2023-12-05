@@ -4,14 +4,22 @@ block variables
   - const template = 'about'
 
   - const about = 'overflow-hidden'
-  - const aboutWrapper = '[&>*]:py-32'
+  - const aboutWrapper = '[&>*]:py-60'
 
   - const gallery = 'h-[50rem] relative'
   - const galleryWrapper = 'flex absolute top-1/2 -translate-y-1/2'
   - const galleryImageWrapper = 'w-[30rem] h-[40rem]'
   - const galleryImage = 'image'
 
-  - const aboutTitle = 'about-heading '
+  - const aboutTitle = 'about-heading'
+
+  - const content = 'grid justify-center'
+  - const contentWrapper = 'flex gap-40'
+  - const contentTextWrapper = 'flex gap-40'
+  - const contentLabel = 'label'
+  - const contentText = 'max-w-md'
+  - const contentImageWrapper = 'w-[45rem] h-[60rem]'
+  - const contentImage = 'image'
 
   - const highlight = 'w-[100rem] relative h-[70rem] mx-auto'
   - const highlightWrapper = ''
@@ -22,12 +30,18 @@ block variables
   - const highlightLabel = 'label rotate-90 text-center w-32'
   - const highlightHeading = 'title-heading'
 
+  - const direction = (direction) => direction === 'left' ? '' : 'flex-row-reverse'
+  - const imageSize = (index) => index === 4 || index === 6 ? 'w-[800px] h-[500px]' : ''
+  - const sectionLayoutFour = (index) => index === 4 ? '!justify-end' : ''
+  - const sectionLayoutSix = (index) => index === 6 ? '!justify-start' : ''
+
+
 
 block content 
   #about(class=about)
     #about__wrapper(class=aboutWrapper)
 
-      each section in body
+      each section,index in body
 
         if section.slice_type == 'gallery'
           section#gallery(class=gallery)
@@ -40,17 +54,18 @@ block content
           h2(class=aboutTitle)!=section.primary.text.replace(/\n/g, '<br>')
 
         if section.slice_type == 'content'
-          section.about__content 
-            .content__wrapper 
-              p.bg-red-200.content__label=section.primary.title
-              p.content__description=section.primary.text
-              figure
-                img(src=section.primary.image.url)
+          section(class=`${content} ${sectionLayoutFour(index)} ${sectionLayoutSix(index)}`)
+            div(class=`${contentWrapper} ${direction(section.primary.direction)}`)
+              div(class=contentTextWrapper)
+                p(class=contentLabel)=section.primary.title
+                p(class=contentText)!=section.primary.text.replace(/\n/g, '<br>')
+              figure(class=`${contentImageWrapper} ${imageSize(index)}`)
+                img(src=section.primary.image.url class=contentImage)
 
         if section.slice_type == 'highlight'
-          section.highlight(class=highlight)
-            #highlight__wrapper(class=highlightWrapper)
-              #highlight__text(class=highlightText)
+          section(class=highlight)
+            div(class=highlightWrapper)
+              div(class=highlightText)
                 h3(class=highlightHeading)=section.primary.title
                 if section.primary.label
                   p(class=highlightLabel)=section.primary.label

@@ -1,16 +1,10 @@
 extends ../base.pug
+include ../partials/vertical-titles
 
 block variables
   - const template = 'collections'
 
   - const collectionsContainer = 'relative h-screen bg-red-400 overflow-hidden'
-
-  - const collectionTitles = 'absolute-center -rotate-90 z-10'
-  - const collectionTitlesWrapper = 'flex gap-4'
-
-  - const title = 'flex items-center gap-4'
-  - const labelText = 'label rotate-90 text-center'
-  - const titleText = 'title-heading'
 
   - const collectionsGallery = 'absolute top-1/2 -translate-y-1/2'
   - const collectionGalleryWrapper = 'flex gap-x-16'
@@ -29,12 +23,7 @@ block content
   #collections(class=collectionsContainer)
     #collection__wrapper 
 
-      #collections__titles(class=collectionTitles)
-        #collections__titles__wrapper(class=collectionTitlesWrapper)
-          each collection, index in collections
-            .collections__titles__item(class=title)         
-              p(class=labelText)!=`${home.data.label}<br>${Numbers(index)}`          
-              p(class=titleText)=collection.data.title
+      +vertical-titles(collections)
 
       #collections__gallery(class=collectionsGallery)
         #collection__gallery__wrapper(class=collectionGalleryWrapper)

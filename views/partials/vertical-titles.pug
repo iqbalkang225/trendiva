@@ -1,0 +1,35 @@
+
+//- block variables
+  //- - const collectionsContainer = 'relative h-screen bg-red-400 overflow-hidden'
+
+  //- - const collectionTitles = 'absolute-center -rotate-90 z-10'
+  //- - const collectionTitlesWrapper = 'flex gap-4'
+
+  //- - const title = 'flex items-center gap-4'
+  //- - const labelText = 'label rotate-90 text-center'
+  //- - const titleText = 'title-heading'
+
+  //- - const collectionsGallery = 'absolute top-1/2 -translate-y-1/2'
+  //- - const collectionGalleryWrapper = 'flex gap-x-16'
+
+  //- - const imageWrapper = 'w-[30rem] h-[40rem]'
+  //- - const image = 'image'
+
+  //- - const collectionInfoContainer = 'absolute bottom-16 left-16 max-w-xl'
+  //- - const collectionInfoTitle = 'collection-heading'
+
+mixin vertical-titles(collections) 
+  #home__titles.absolute-center.-rotate-90.z-10
+    #home__titles__wrapper.flex.gap-4
+      each collection, index in collections
+        .home__titles__item.flex.items-center.gap-4       
+          p.label.rotate-90.text-center!=`${home.data.label}<br>${Numbers(index)}`          
+          p.title-heading=collection.data.title
+
+//- mixin vertical-titles(collections) 
+//-   #home__titles(class=collectionTitles)
+//-     #home__titles__wrapper(class=collectionTitlesWrapper)
+//-       each collection, index in collections
+//-         .home__titles__item(class=title)         
+//-           p(class=labelText)!=`${home.data.label}<br>${Numbers(index)}`          
+//-           p(class=titleText)=collection.data.title
