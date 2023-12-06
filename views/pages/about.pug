@@ -51,7 +51,7 @@ block content
                   img(data-src=media.image.url, class=galleryImage)
 
         if section.slice_type == 'heading'
-          h2(class=aboutTitle)!=section.primary.text.replace(/\n/g, '<br>')
+          h2(class=aboutTitle data-animation='title')!=section.primary.text.replace(/\n/g, '<br>')
 
         if section.slice_type == 'content'
           section(class=`${content} ${sectionLayoutFour(index)} ${sectionLayoutSix(index)}`)
@@ -66,7 +66,7 @@ block content
           section(class=highlight)
             div(class=highlightWrapper)
               div(class=highlightText)
-                h3(class=highlightHeading)=section.primary.title
+                h3(class=highlightHeading data-animation='title')=section.primary.title
                 if section.primary.label
                   p(class=highlightLabel)=section.primary.label
               each media in section.items

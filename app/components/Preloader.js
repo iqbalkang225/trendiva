@@ -31,7 +31,6 @@ export default class Preloader extends Component {
 
     this.elements.titleSpans = document.querySelectorAll("span span");
 
-    console.log(this.elements.preloaderText.innerHTML);
   }
 
   preloadImages() {

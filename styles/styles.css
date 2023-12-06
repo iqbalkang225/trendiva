@@ -91,3 +91,14 @@ body {
   overflow: hidden;
   line-height: 1.2;
 }
+
+[data-animation = 'title'] span {
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1.2;
+  /* border: 1px solid red; */
+}
+
+[data-animation = 'title'] span span {
+  /* background-color: red; */
+}

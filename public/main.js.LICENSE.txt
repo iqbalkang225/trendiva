@@ -18,6 +18,16 @@
  * @author: Jack Doyle, jack@greensock.com
 */
 
+/*!
+ * ScrollTrigger 3.6.1
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
 /*! ../styles/styles.css */
 
 /*! ../utils/text */
@@ -148,6 +158,8 @@
 
 /*! ./xml-entities */
 
+/*! animations/Title */
+
 /*! ansi-html-community */
 
 /*! ansi-regex */
@@ -159,6 +171,8 @@
 /*! events */
 
 /*! gsap */
+
+/*! gsap/ScrollTrigger */
 
 /*! html-entities */
 
@@ -178,6 +192,8 @@
 
 /*! url */
 
+/*! utils/text */
+
 /*! webpack/hot/emitter */
 
 /*!**********************!*\
@@ -195,6 +211,10 @@
 /*!*****************************!*\
   !*** ./app/classes/Page.js ***!
   \*****************************/
+
+/*!*********************************!*\
+  !*** ./app/animations/Title.js ***!
+  \*********************************/
 
 /*!*********************************!*\
   !*** ./app/pages/Home/index.js ***!
@@ -347,6 +367,10 @@
 /*!*******************************************!*\
   !*** ./node_modules/querystring/index.js ***!
   \*******************************************/
+
+/*!********************************************!*\
+  !*** ./node_modules/gsap/ScrollTrigger.js ***!
+  \********************************************/
 
 /*!********************************************!*\
   !*** ./node_modules/lodash/_baseForOwn.js ***!

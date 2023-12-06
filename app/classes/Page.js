@@ -1,11 +1,15 @@
 import each from "lodash/each";
 import GSAP from "gsap";
+import Title from "animations/Title";
 
 export default class Page {
   constructor({ id, element, elements }) {
     this.id = id;
     this.selector = element;
-    this.selectorChildren = elements;
+    this.selectorChildren = {
+      animationTitles: '[data-animation="title"]',
+      ...elements,
+    };
   }
 
   create() {
@@ -13,20 +17,24 @@ export default class Page {
     this.elements = {};
 
     each(this.selectorChildren, (selector, key) => {
-      if (
-        selector instanceof window.HTMLElement ||
-        selector instanceof window.NodeList ||
-        Array.isArray(selector)
-      ) {
+      
+      if ( selector instanceof window.HTMLElement || selector instanceof window.NodeList || Array.isArray(selector) ) 
+      {
         this.elements[key] = selector;
-      } else {
+      } 
+      
+      else 
+      {
         this.elements[key] = document.querySelectorAll(selector);
-
         if (this.elements[key].length === 0) return (this.elements[key] = null);
-        if (this.elements[key].length === 1)
-          return (this.elements[key] = document.querySelector(selector));
+        if (this.elements[key].length === 1) return (this.elements[key] = document.querySelector(selector));
       }
+
     });
+  }
+
+  createAnimations() {
+     this.titles = new Title()
   }
 
   show() {
