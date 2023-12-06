@@ -70,9 +70,9 @@ app.get("/", async (req, res) => {
     }
   );
   const preloader = await api.getSingle("preloader");
-  console.log(collections);
+  console.log(preloader);
 
-  res.render("pages/home", { collections, home });
+  res.render("pages/home", { collections, home, preloader });
 });
 
 app.get("/collections", async (req, res) => {
@@ -106,9 +106,10 @@ app.get("/details/:uid", async (req, res) => {
 app.get("/about", async (req, res) => {
   const api = await initApi(req);
   const about = await api.getSingle("about");
+  const preloader = await api.getSingle("preloader");
 
   const { body } = about.data;
-  res.render("pages/about", { body });
+  res.render("pages/about", { body, preloader });
 });
 
 app.listen(port, () => {

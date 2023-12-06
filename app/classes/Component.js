@@ -1,58 +1,35 @@
-import AutoBind from 'auto-bind'
-import EventEmitter from 'events'
+import each from "lodash/each";
 
-import each from 'lodash/each'
+import EventEmitter from "events";
 
 export default class Component extends EventEmitter {
-  constructor ({
-    classes,
-    element,
-    elements
-  }) {
-    super()
+  constructor({ element, elements }) {
+    super();
 
-    AutoBind(this)
+    this.selector = element;
+    this.selectorChildren = elements;
 
-    this.classes = classes
-    this.selector = element
-    this.selectorChildren = {
-      ...elements
-    }
-
-    this.create()
-
-    this.addEventListeners()
+    this.create();
   }
 
-  create () {
-    if (this.selector instanceof window.HTMLElement) {
-      this.element = this.selector
-    } else {
-      this.element = document.querySelector(this.selector)
-    }
+  create() {
+    this.element = document.querySelector(this.selector);
+    this.elements = {};
 
-    this.elements = {}
-
-    each(this.selectorChildren, (entry, key) => {
-      if (entry instanceof window.HTMLElement || entry instanceof window.NodeList || Array.isArray(entry)) {
-        this.elements[key] = entry
+    each(this.selectorChildren, (selector, key) => {
+      if (
+        selector instanceof window.HTMLElement ||
+        selector instanceof window.NodeList ||
+        Array.isArray(selector)
+      ) {
+        this.elements[key] = selector;
       } else {
-        this.elements[key] = this.element.querySelectorAll(entry)
+        this.elements[key] = document.querySelectorAll(selector);
 
-        if (this.elements[key].length === 0) {
-          this.elements[key] = null
-        } else if (this.elements[key].length === 1) {
-          this.elements[key] = this.element.querySelector(entry)
-        }
+        if (this.elements[key].length === 0) return (this.elements[key] = null);
+        if (this.elements[key].length === 1)
+          return (this.elements[key] = document.querySelector(selector));
       }
-    })
-  }
-
-  addEventListeners () {
-
-  }
-
-  removeEventListeners () {
-
+    });
   }
 }

@@ -85,3 +85,9 @@ body {
   font-size: 1.25rem;
   line-height: 1.6;
 }
+
+#preloader span {
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1.2;
+}

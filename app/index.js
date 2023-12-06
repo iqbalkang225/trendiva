@@ -1,4 +1,5 @@
 import "../styles/styles.css";
+import Preloader from "./components/Preloader";
 
 import About from "./pages/About";
 import Collections from "./pages/Collections";
@@ -9,6 +10,8 @@ import each from "lodash/each";
 
 class App {
   constructor() {
+    this.createPreloader();
+
     this.createContent();
     this.createPages();
 
@@ -33,6 +36,15 @@ class App {
     this.page.show();
   }
 
+  createPreloader() {
+    this.preloader = new Preloader();
+    this.preloader.once("completed", this.onComplete.bind(this));
+  }
+
+  onComplete() {
+    this.preloader.destroy();
+  }
+
   async onChange(url) {
     await this.page.hide();
 
@@ -54,6 +66,7 @@ class App {
 
     this.page = this.pages[this.template];
     this.page.create();
+    this.addLinkListeners();
     this.page.show();
   }
 

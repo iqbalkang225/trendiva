@@ -48,7 +48,7 @@ block content
             #gallery__wrapper(class=galleryWrapper)
               each media in section.items
                 figure(class=galleryImageWrapper)
-                  img(src=media.image.url, class=galleryImage)
+                  img(data-src=media.image.url, class=galleryImage)
 
         if section.slice_type == 'heading'
           h2(class=aboutTitle)!=section.primary.text.replace(/\n/g, '<br>')
@@ -60,7 +60,7 @@ block content
                 p(class=contentLabel)=section.primary.title
                 p(class=contentText)!=section.primary.text.replace(/\n/g, '<br>')
               figure(class=`${contentImageWrapper} ${imageSize(index)}`)
-                img(src=section.primary.image.url class=contentImage)
+                img(data-src=section.primary.image.url class=contentImage)
 
         if section.slice_type == 'highlight'
           section(class=highlight)
@@ -71,5 +71,5 @@ block content
                   p(class=highlightLabel)=section.primary.label
               each media in section.items
                 figure(class=highlightImageWrapper)
-                  img(src=media.image.url,  class=highlightImage)
+                  img(data-src=media.image.url,  class=highlightImage)
               

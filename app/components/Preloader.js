@@ -1,170 +1,76 @@
-import { Texture } from 'ogl'
-import GSAP from 'gsap'
+import Component from "classes/Component";
+import { split } from "../utils/text";
 
-import each from 'lodash/each'
-
-import Component from 'classes/Component'
-
-import { DEFAULT as ease } from 'utils/easings'
-import { split } from 'utils/text'
+import each from "lodash/each";
+import GSAP from "gsap";
 
 export default class Preloader extends Component {
-  constructor ({ canvas }) {
+  constructor() {
     super({
-      element: '.preloader',
+      element: "#preloader",
       elements: {
-        title: '.preloader__text',
-        number: '.preloader__number',
-        numberText: '.preloader__number__text'
-      }
-    })
+        preloaderText: "#preloader__text",
+        preloaderNumber: "#preloader__number",
+        images: document.querySelectorAll("img"),
+      },
+    });
 
-    this.canvas = canvas
+    this.length = 0;
 
-    window.TEXTURES = {}
+    this.preloadImages();
 
-    this.elements.titleSpans = split({
-      append: true,
-      element: this.elements.title,
-      expression: '<br>'
-    })
+    split({
+      element: this.elements.preloaderText,
+      expression: "<br>",
+    });
 
-    each(this.elements.titleSpans, element => {
-      split({
-        append: false,
-        element,
-        expression: ''
-      })
-    })
+    split({
+      element: this.elements.preloaderText,
+      expression: "<br>",
+    });
 
-    this.length = 0
+    this.elements.titleSpans = document.querySelectorAll("span span");
 
-    this.createLoader()
+    console.log(this.elements.preloaderText.innerHTML);
   }
 
-  createLoader () {
-    this.animateIn = GSAP.timeline()
-
-    this.animateIn.set(this.elements.title, {
-      autoAlpha: 1
-    })
-
-    each(this.elements.titleSpans, (line, index) => {
-      const letters = line.querySelectorAll('span')
-
-      const onStart = _ => {
-        GSAP.fromTo(letters, {
-          autoAlpha: 0,
-          display: 'inline-block',
-          y: '100%'
-        }, {
-          autoAlpha: 1,
-          delay: 0.2,
-          display: 'inline-block',
-          duration: 1,
-          ease: 'back.inOut',
-          stagger: 0.015,
-          y: '0%'
-        })
-      }
-
-      this.animateIn.fromTo(line, {
-        autoAlpha: 0,
-        y: '100%'
-      }, {
-        autoAlpha: 1,
-        delay: 0.2 * index,
-        duration: 1.5,
-        onStart,
-        ease: 'expo.inOut',
-        y: '0%'
-      }, 'start')
-    })
-
-    this.animateIn.call(_ => {
-      window.ASSETS.forEach(image => {
-        const texture = new Texture(this.canvas.gl, {
-          generateMipmaps: false
-        })
-
-        const media = new window.Image()
-
-        media.crossOrigin = 'anonymous'
-        media.src = image
-        media.onload = _ => {
-          texture.image = media
-
-          this.onAssetLoaded()
-        }
-
-        window.TEXTURES[image] = texture
-      })
-    })
+  preloadImages() {
+    each(this.elements.images, (element) => {
+      element.src = element.getAttribute("data-src");
+      element.onload = this.onAssetLoaded.bind(this);
+    });
   }
 
-  onAssetLoaded (image) {
-    this.length += 1
+  onAssetLoaded() {
+    this.length++;
 
-    const percent = this.length / window.ASSETS.length
+    const percentLoaded = Math.round(
+      (this.length / this.elements.images.length) * 100
+    );
 
-    this.elements.numberText.innerHTML = `${Math.round(percent * 100)}%`
+    this.elements.preloaderNumber.textContent = percentLoaded + "%";
 
-    if (percent === 1) {
-      this.onLoaded()
-    }
+    if (percentLoaded === 100) this.playAnimation();
   }
 
-  onLoaded () {
-    return new Promise(resolve => {
-      this.emit('completed')
+  playAnimation() {
+    const animateOut = GSAP.timeline({
+      delay: 1,
+    });
 
-      this.animateOut = GSAP.timeline({
-        delay: 1
-      })
-
-      each(this.elements.titleSpans, (line, index) => {
-        const letters = line.querySelectorAll('span')
-
-        const onStart = _ => {
-          GSAP.to(letters, {
-            autoAlpha: 0,
-            delay: 0.2,
-            display: 'inline-block',
-            duration: 1,
-            ease: 'back.inOut',
-            stagger: 0.015,
-            y: '-100%'
-          })
-        }
-
-        this.animateOut.to(line, {
-          autoAlpha: 0,
-          delay: 0.2 * index,
-          duration: 1.5,
-          onStart,
-          ease: 'expo.inOut',
-          y: '-100%'
-        }, 'start')
-      })
-
-      this.animateOut.to(this.elements.numberText, {
-        autoAlpha: 0,
+    animateOut
+      .to(this.elements.titleSpans, {
+        y: 100,
         duration: 1,
-        ease
-      }, 'start')
-
-      this.animateOut.to(this.element, {
-        autoAlpha: 0,
-        duration: 1
+        stagger: 0.15,
+        ease: "power4.in",
       })
+      .to(this.element, { autoAlpha: 0 });
 
-      this.animateOut.call(_ => {
-        this.destroy()
-      })
-    })
+    animateOut.call(() => this.emit("completed"));
   }
 
-  destroy () {
-    this.element.parentNode.removeChild(this.element)
+  destroy() {
+    this.element.parentNode.removeChild(this.element);
   }
 }

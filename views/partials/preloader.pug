@@ -1,7 +1,8 @@
--preloaderContainer = ['h-screen', 'w-screen', 'bg-red-500', 'flex', 'justify-center', 'items-center', 'hidden']
--preloaderText = ['font-heading', 'text-6xl', 'text-center', 'leading-[1.2]']
--preloaderSpan = ['absolute', 'bottom-16']
+- preloaderContainer = ['h-screen w-screen bg-red-400 flex justify-center items-center z-10 absolute']
+- preloaderText = ['font-heading text-6xl text-center leading-[1.2]']
+- preloaderNumber = ['absolute bottom-16']
 
 #preloader(class=preloaderContainer)
-  p(class=preloaderText)!=data.title.replace(/\n/g, '<br>')
-  span(class=preloaderSpan) 50%
+  p#preloader__text(class=preloaderText)!=preloader.data.title.replace(/\n/g, '<br>')
+  span(class=preloaderNumber)
+    span#preloader__number 50%

@@ -31,7 +31,7 @@ block content
             each item in collection.data.products 
               a(href="#") 
                 figure(class=imageWrapper)
-                  img(src=item.product.data.image.url class=image)
+                  img(data-src=item.product.data.image.url class=image)
 
       #collection__content
         each collection,index in collections 
