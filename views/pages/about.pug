@@ -39,7 +39,7 @@ block variables
 
 block content 
   #about(class=about)
-    #about__wrapper(class=aboutWrapper)
+    #about__wrapper(class=aboutWrapper data-scroll-container)
 
       each section,index in body
 
@@ -57,8 +57,8 @@ block content
           section(class=`${content} ${sectionLayoutFour(index)} ${sectionLayoutSix(index)}`)
             div(class=`${contentWrapper} ${direction(section.primary.direction)}`)
               div(class=contentTextWrapper)
-                p(class=contentLabel)=section.primary.title
-                p(class=contentText)!=section.primary.text.replace(/\n/g, '<br>')
+                p(class=contentLabel data-animation='title')=section.primary.title
+                p(class=contentText data-animation='paragraph')!=section.primary.text.replace(/\n/g, '<br>')
               figure(class=`${contentImageWrapper} ${imageSize(index)}`)
                 img(data-src=section.primary.image.url class=contentImage)
 
@@ -68,7 +68,7 @@ block content
               div(class=highlightText)
                 h3(class=highlightHeading data-animation='title')=section.primary.title
                 if section.primary.label
-                  p(class=highlightLabel)=section.primary.label
+                  p(class=highlightLabel data-animation='title')=section.primary.label
               each media in section.items
                 figure(class=highlightImageWrapper)
                   img(data-src=media.image.url,  class=highlightImage)

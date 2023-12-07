@@ -1,12 +1,14 @@
-- const navbar = 'absolute z-10 flex justify-between w-full'
+- const navigation = 'absolute z-10 flex justify-between left-16 top-16 right-16'
 - const links = 'flex gap-16'
+- const linkItem = ' absolute right-0'
 
-nav(class=navbar)
-  a(href="/") Trendiva 
 
-  ul(class=links)
-    li 
+nav#navigation(class=navigation)
+  a#logo(href="/") Trendiva 
+
+  ul#links(class=links)
+    li(class=linkItem)
       a(href="/about") About 
 
-    li 
+    li(class=linkItem)
       a(href="/collections") Collections   

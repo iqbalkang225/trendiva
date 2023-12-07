@@ -5,12 +5,12 @@ block variables
   - const template = 'home'
 
   - const homeContainer = 'h-screen'
-  - const homeWrapper = 'h-full bg-red-400 overflow-hidden relative'
+  - const homeWrapper = 'h-full overflow-hidden relative'
   - const button = 'absolute left-1/2 -translate-x-1/2 bottom-5'
 
 block content 
   #home(class=homeContainer)
-    #home__wrapper(class=homeWrapper)
+    #home__wrapper(class=homeWrapper data-scroll-container)
       +vertical-titles(collections)
 
     #home__gallery

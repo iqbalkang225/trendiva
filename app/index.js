@@ -1,16 +1,18 @@
 import "../styles/styles.css";
-import Preloader from "./components/Preloader";
+import Navigation from "components/Navigation";
+import Preloader from "components/Preloader";
 
-import About from "./pages/About";
-import Collections from "./pages/Collections";
-import Details from "./pages/Details";
-import Home from "./pages/Home";
+import About from "pages/About";
+import Collections from "pages/Collections";
+import Details from "pages/Details";
+import Home from "pages/Home";
 
 import each from "lodash/each";
 
 class App {
   constructor() {
     this.createPreloader();
+
 
     this.createContent();
     this.createPages();
@@ -32,9 +34,11 @@ class App {
     };
 
     this.page = this.pages[this.template];
+    this.createNavigation()
     this.page.create();
     this.page.show();
     this.page.createAnimations()
+    // this.page.lScroll()
   }
 
   createPreloader() {
@@ -44,6 +48,11 @@ class App {
 
   onComplete() {
     this.preloader.destroy();
+  }
+
+  createNavigation() {
+    this.navigation = new Navigation()
+    this.navigation.onChange(this.template)
   }
 
   async onChange(url) {
@@ -66,6 +75,7 @@ class App {
     this.content.innerHTML = content.innerHTML;
 
     this.page = this.pages[this.template];
+    this.createNavigation()
     this.page.create();
     this.addLinkListeners();
     this.page.show();

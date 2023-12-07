@@ -1,13 +1,15 @@
 import each from "lodash/each";
 import GSAP from "gsap";
-import Title from "animations/Title";
+
+import Titles from "animations/Titles";
+import Paragraphs from "../animations/Paragraphs";
 
 export default class Page {
   constructor({ id, element, elements }) {
     this.id = id;
     this.selector = element;
     this.selectorChildren = {
-      animationTitles: '[data-animation="title"]',
+      // animationTitles: '[data-animation="title"]',
       ...elements,
     };
   }
@@ -34,8 +36,10 @@ export default class Page {
   }
 
   createAnimations() {
-     this.titles = new Title()
+     this.titles = new Titles()
+     this.paragraphs = new Paragraphs()
   }
+  
 
   show() {
     return new Promise((resolve) => {
