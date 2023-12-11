@@ -1,55 +1,37 @@
-import GSAP from 'gsap'
+import GSAP from "gsap";
 
-import Component from 'classes/Component'
+import Component from "classes/Component";
 
-import { COLOR_BRIGHT_GRAY, COLOR_QUARTER_SPANISH_WHITE } from 'utils/colors'
-
+import { COLOR_BRIGHT_GRAY, COLOR_QUARTER_SPANISH_WHITE } from "utils/colors";
 
 export default class Navigation extends Component {
-  constructor () {
+  constructor() {
     super({
-      element: '#navigation',
+      element: "#navigation",
       elements: {
-        logo: '#logo',
-        links: '#links',
-        linkItems: '#links li'
-      }
-    })
-
-    GSAP.set(this.elements.linkItems[1], {autoAlpha: 0})
-
+        logo: "#logo",
+        links: "#links",
+        linkItems: "#links li",
+      },
+    });
   }
 
-  onChange (template) {
+  onChange(template) {
     // console.log(template)
-    if (template === 'about') {
+    if (template === "about") {
       GSAP.set(this.element, {
-        color: 'red'
-      })
-      GSAP.to(this.elements.linkItems[0], {autoAlpha: 0})
-      GSAP.to(this.elements.linkItems[1], {autoAlpha: 1, delay: 0.5})
+        color: "red",
+      });
+      GSAP.to(this.elements.linkItems[0], { autoAlpha: 0 });
+      GSAP.to(this.elements.linkItems[1], { autoAlpha: 1, delay: 1 });
     }
-    if (template === 'collections') {
+
+    if (template === "collections") {
       GSAP.to(this.element, {
-        color: 'green'
-      })
-      GSAP.to(this.elements.linkItems[1], {autoAlpha: 0})
-      GSAP.to(this.elements.linkItems[0], {autoAlpha: 1, delay: 0.5})
+        color: "green",
+      });
+      GSAP.to(this.elements.linkItems[0], { autoAlpha: 1, delay: 1 });
+      GSAP.to(this.elements.linkItems[1], { autoAlpha: 0 });
     }
-    // if (template === 'about') {
-    //   GSAP.set(this.element, {
-    //     color: 'red'
-    //   })
-
-    //   GSAP.set(this.elements.linkItems[0], { autoAlpha: 1 })
-    //   GSAP.set(this.elements.linkItems[1], { autoAlpha: 0 })
-    // } else {
-    //   GSAP.set(this.element, {
-    //     color: COLOR_QUARTER_SPANISH_WHITE
-    //   })
-
-    //   GSAP.set(this.elements.linkItems[0], { autoAlpha: 0 })
-    //   GSAP.set(this.elements.linkItems[1], { autoAlpha: 1 })
-    // }
   }
 }

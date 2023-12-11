@@ -37,8 +37,8 @@ class App {
     this.createNavigation()
     this.page.create();
     this.page.show();
+    this.page.locoScroll()
     this.page.createAnimations()
-    // this.page.lScroll()
   }
 
   createPreloader() {
